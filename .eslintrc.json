@@ -1,0 +1,11 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-console": "warn",
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-single"],
+    "semi": ["error", "never"],
+    "indent": ["warn", 2, { "SwitchCase": 1 }],
+    "object-curly-spacing": ["error", "always"]
+  }
+}
