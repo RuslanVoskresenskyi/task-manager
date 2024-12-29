@@ -19,29 +19,44 @@ const TodoListSection = async () => {
       {todos.map((todo) => (
         <li
           key={todo.id}
-          className='flex items-center justify-between p-4 bg-white shadow-md rounded-md border border-gray-200'
+          className={`p-4 bg-white shadow-md rounded-md border ${
+            todo.completed ? 'border-green-400 bg-green-50' : 'border-gray-200'
+          }`}
         >
-          <div>
-            <h2 className='text-lg font-semibold text-gray-800'>{todo.title}</h2>
-            <p className='text-sm text-gray-600'>{todo.description}</p>
-            <p className='text-sm text-gray-500 mt-1'>
+          <div className='flex items-center justify-between text-sm text-gray-500 mb-2'>
+            <span>
               <strong>Priority:</strong> {todo.priority}
-            </p>
-            <p className='text-sm text-gray-500'>
+            </span>
+            <span>
               <strong>Due Date:</strong> {new Date(todo.due_date).toLocaleDateString()}
-            </p>
+            </span>
           </div>
-          <div className='flex items-center space-x-2'>
-            <ModalWithForm todo={todo} isUpdate={true} />
-            <form action={deleteTodo} className='inline'>
-              <input type='hidden' name='id' value={todo.id} />
-              <Button
-                type='submit'
-                className='bg-red-500 text-white hover:bg-red-600 focus:ring-red-400'
+
+          <div className='flex items-center justify-between'>
+            <div>
+              <h2
+                className={`text-lg font-semibold ${
+                  todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
+                }`}
               >
-                Delete
-              </Button>
-            </form>
+                {todo.title}
+              </h2>
+              <p className={`text-sm ${todo.completed ? 'line-through text-gray-400' : 'text-gray-600'}`}>
+                {todo.description}
+              </p>
+            </div>
+            <div className='flex items-center space-x-2'>
+              <ModalWithForm todo={todo} isUpdate={true} />
+              <form action={deleteTodo} className='inline'>
+                <input type='hidden' name='id' value={todo.id} />
+                <Button
+                  type='submit'
+                  className='bg-red-500 text-white hover:bg-red-600 focus:ring-red-400'
+                >
+                  Delete
+                </Button>
+              </form>
+            </div>
           </div>
         </li>
       ))}

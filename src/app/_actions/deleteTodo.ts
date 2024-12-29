@@ -1,11 +1,11 @@
+'use server'
+
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export async function deleteTodo(formData: FormData) {
-  'use server'
-
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
 

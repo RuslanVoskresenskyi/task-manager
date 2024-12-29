@@ -1,4 +1,4 @@
-import TodoListSection from '@/components/features/TodoList'
+import TodoList from '@/components/features/TodoList'
 import ModalWithForm from '@/components/features/ModalWithForm'
 import FiltersTodos from '@/components/features/FiltersTodos'
 
@@ -9,7 +9,7 @@ const Page = () => {
         <ModalWithForm />
       </div>
       <FiltersTodos />
-      <TodoListSection />
+      <TodoList />
     </div>
   )
 }

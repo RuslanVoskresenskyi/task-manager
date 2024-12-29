@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Todo } from '@/types/Todo'
+import { Priority } from '@/constants/todos'
+import {addTodo} from "@/app/_actions/addTodo";
 
 type ModalWithFormProps = {
   isUpdate?: boolean;
@@ -33,13 +35,14 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'>
           <div className='bg-white p-6 rounded-lg shadow-lg w-96'>
             <h2 className='text-xl font-bold mb-4'>{todo ? 'Edit Todo' : 'Add New Todo'}</h2>
-            <form className='space-y-4'>
+            <form action={addTodo} className='space-y-4'>
+              <input type='hidden' name='id' value={todo?.id} />
               <div>
                 <Label htmlFor='title'>Title</Label>
                 <Input
                   id='title'
                   name='title'
-                  value={todo?.title}
+                  defaultValue={todo?.title}
                   required
                 />
               </div>
@@ -48,7 +51,7 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
                 <Textarea
                   id='description'
                   name='description'
-                  value={todo?.description}
+                  defaultValue={todo?.description}
                   required
                 />
               </div>
@@ -61,12 +64,14 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
                   <SelectTrigger>
                     <SelectValue placeholder='Select Priority' />
                   </SelectTrigger>
-                  <SelectContent className='z-50 relative'>
-                    {priorities.map((priority) => (
-                      <SelectItem key={priority} value={priority}>
-                        {priority}
-                      </SelectItem>
-                    ))}
+                  <SelectContent>
+                    {Object.values(Priority)
+                      .filter((priority) => priority !== Priority.ANY)
+                      .map((priority) => (
+                        <SelectItem key={priority} value={priority}>
+                          {priority}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -76,7 +81,7 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
                   id='due_date'
                   name='due_date'
                   type='date'
-                  value={todo?.due_date}
+                  defaultValue={todo?.due_date}
                   required
                 />
               </div>
