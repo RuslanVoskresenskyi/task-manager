@@ -9,14 +9,13 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Todo } from '@/types/Todo'
 import { Priority } from '@/constants/todos'
-import {addTodo} from "@/app/_actions/addTodo";
+import { addTodo } from '@/app/_actions/addTodo'
+import { updateTodo } from '@/app/_actions/updateTodo'
 
 type ModalWithFormProps = {
   isUpdate?: boolean;
   todo?: Todo
 };
-
-const priorities = ['Low', 'Medium', 'High']
 
 const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,7 +34,7 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'>
           <div className='bg-white p-6 rounded-lg shadow-lg w-96'>
             <h2 className='text-xl font-bold mb-4'>{todo ? 'Edit Todo' : 'Add New Todo'}</h2>
-            <form action={addTodo} className='space-y-4'>
+            <form action={todo ? updateTodo : addTodo} className='space-y-4'>
               <input type='hidden' name='id' value={todo?.id} />
               <div>
                 <Label htmlFor='title'>Title</Label>
@@ -89,7 +88,7 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
                 <Checkbox
                   id='completed'
                   name='completed'
-                  checked={todo?.completed}
+                  defaultChecked={todo?.completed || false}
                 />
                 <Label htmlFor='completed' className='ml-2'>
                   Completed

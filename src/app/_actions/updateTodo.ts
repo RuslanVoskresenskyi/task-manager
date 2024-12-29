@@ -7,9 +7,15 @@ import { redirect } from 'next/navigation'
 import { formatDate } from '@/utils/dateFormatter'
 import { Priority } from '@/constants/todos'
 
-export async function addTodo(formData: FormData) {
+export async function updateTodo(formData: FormData) {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
+
+  const todoId = formData.get('id')
+
+  if (!todoId) {
+    throw new Error('Todo ID is required but was not provided.')
+  }
 
   const title = formData.get('title') || ''
   const description = formData.get('description') || ''
@@ -17,16 +23,19 @@ export async function addTodo(formData: FormData) {
   const dueDate = formData.get('due_date') || formatDate(new Date())
   const completed = Boolean(formData.get('completed'))
 
-  const { error } = await supabase.from('todos').insert({
-    title,
-    description,
-    priority,
-    due_date: dueDate,
-    completed,
-  })
+  const { error } = await supabase
+    .from('todos')
+    .update({
+      title,
+      description,
+      priority,
+      due_date: dueDate,
+      completed,
+    })
+    .eq('id', todoId)
 
   if (error) {
-    throw new Error(`Failed to add todo: ${error.message}`)
+    throw new Error(`Failed to update todo: ${error.message}`)
   }
 
   revalidatePath('/')

@@ -11,3 +11,8 @@ export enum SortBy {
   DUE_DATE = 'due_date',
   TITLE = 'title',
 }
+
+// sort by priority as one
+// sort by completion as boolean
+// sort by date as one
+// sort by SortBy
