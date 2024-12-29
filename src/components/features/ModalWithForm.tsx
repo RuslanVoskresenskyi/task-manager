@@ -61,7 +61,7 @@ const ModalWithForm: React.FC<ModalWithFormProps> = ({ isUpdate = false, todo })
                   <SelectTrigger>
                     <SelectValue placeholder='Select Priority' />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className='z-50 relative'>
                     {priorities.map((priority) => (
                       <SelectItem key={priority} value={priority}>
                         {priority}

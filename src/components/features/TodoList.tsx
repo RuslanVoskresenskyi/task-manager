@@ -1,31 +1,52 @@
 import { getTodos } from '@/app/_actions/getTodos'
 import { Button } from '@/components/ui/button'
 import { deleteTodo } from '@/app/_actions/deleteTodo'
+import ModalWithForm from '@/components/features/ModalWithForm'
 
-export default async function TodoList() {
+const TodoListSection = async () => {
   const { data: todos } = await getTodos()
 
   if (!todos?.length) {
     return (
-      <div>Empty List</div>
+      <div className='flex items-center justify-center h-48'>
+        <p className='text-lg font-semibold text-gray-500'>No tasks available</p>
+      </div>
     )
   }
 
   return (
-    <div>
-      <h1 className='text-xl font-bold mb-4'>Список задач</h1>
-      <ul className='list-disc pl-6'>
-        {todos?.map((todo) => (
-          <li key={todo.id} className='mb-2'>
-            <strong>{todo.title}</strong>: {todo.description}
-            <form action={deleteTodo}>
+    <ul className='space-y-4'>
+      {todos.map((todo) => (
+        <li
+          key={todo.id}
+          className='flex items-center justify-between p-4 bg-white shadow-md rounded-md border border-gray-200'
+        >
+          <div>
+            <h2 className='text-lg font-semibold text-gray-800'>{todo.title}</h2>
+            <p className='text-sm text-gray-600'>{todo.description}</p>
+            <p className='text-sm text-gray-500 mt-1'>
+              <strong>Priority:</strong> {todo.priority}
+            </p>
+            <p className='text-sm text-gray-500'>
+              <strong>Due Date:</strong> {new Date(todo.due_date).toLocaleDateString()}
+            </p>
+          </div>
+          <div className='flex items-center space-x-2'>
+            <ModalWithForm todo={todo} isUpdate={true} />
+            <form action={deleteTodo} className='inline'>
               <input type='hidden' name='id' value={todo.id} />
-              <Button type='submit'>Delete</Button>
+              <Button
+                type='submit'
+                className='bg-red-500 text-white hover:bg-red-600 focus:ring-red-400'
+              >
+                Delete
+              </Button>
             </form>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </div>
+        </li>
+      ))}
+    </ul>
   )
 }
 
+export default TodoListSection
