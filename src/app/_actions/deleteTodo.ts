@@ -24,7 +24,7 @@ export async function deleteTodo(formData: FormData) {
     throw new Error(`Failed to delete todo: ${error.message}`)
   }
 
-  revalidatePath('/todos')
+  revalidatePath('/')
 
-  redirect('/todos')
+  redirect('/')
 }

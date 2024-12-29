@@ -1,6 +1,6 @@
-import { getTodos } from '@/app/todos/_actions/getTodos'
+import { getTodos } from '@/app/_actions/getTodos'
 import { Button } from '@/components/ui/button'
-import { deleteTodo } from '@/app/todos/_actions/deleteTodo'
+import { deleteTodo } from '@/app/_actions/deleteTodo'
 
 export default async function TodoList() {
   const { data: todos } = await getTodos()
