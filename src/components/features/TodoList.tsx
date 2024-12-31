@@ -2,9 +2,10 @@ import { getTodos } from '@/app/_actions/getTodos'
 import { Button } from '@/components/ui/button'
 import { deleteTodo } from '@/app/_actions/deleteTodo'
 import ModalWithForm from '@/components/features/ModalWithForm'
+import { SearchParams } from '@/types/SearchParams'
 
-const TodoListSection = async () => {
-  const { data: todos } = await getTodos()
+const TodoList = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const { data: todos } = await getTodos({ searchParams })
 
   if (!todos?.length) {
     return (
@@ -64,4 +65,4 @@ const TodoListSection = async () => {
   )
 }
 
-export default TodoListSection
+export default TodoList

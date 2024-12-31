@@ -6,13 +6,14 @@ export enum Priority {
   P4 = 'P4',
 }
 
+export enum Completion {
+  ALL = 'ALL',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+}
+
 export enum SortBy {
   PRIORITY = 'priority',
   DUE_DATE = 'due_date',
   TITLE = 'title',
 }
-
-// sort by priority as one
-// sort by completion as boolean
-// sort by date as one
-// sort by SortBy
