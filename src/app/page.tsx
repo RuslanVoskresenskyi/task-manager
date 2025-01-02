@@ -1,16 +1,19 @@
-import Link from 'next/link'
+import TodoList from '@/components/features/TodoList'
+import ModalWithForm from '@/components/features/ModalWithForm'
+import FiltersTodos from '@/components/features/FiltersTodos'
 
-export default function Home() {
+const Page = async (props: { searchParams: Promise<any> }) => {
+  const searchParams = await props.searchParams
+
   return (
-    <main className='flex min-h-screen flex-col items-center justify-center p-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white'>
-      <div className='text-center'>
-        <h1 className='text-5xl font-extrabold mb-8 animate-bounce'>
-          Welcome to the Chapter 1 Homework Reference
-        </h1>
-        <Link href='/todos'>
-            Go to Todo List
-        </Link>
+    <div className='p-6 max-w-4xl mx-auto space-y-8'>
+      <div className='flex justify-end mb-4'>
+        <ModalWithForm />
       </div>
-    </main>
+      <FiltersTodos searchParams={searchParams} />
+      <TodoList searchParams={searchParams} />
+    </div>
   )
 }
+
+export default Page
